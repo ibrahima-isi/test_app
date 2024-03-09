@@ -15,10 +15,10 @@ class WeatherData {
       clouds = json['clouds']['all'];
 
   Map<String, dynamic> toJson(){
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['city'] = this.city;
-    data['heat'] = this.heat;
-    data['clouds'] = this.clouds;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['city'] = city;
+    data['heat'] = heat;
+    data['clouds'] = clouds;
     return data;
   }
 }
