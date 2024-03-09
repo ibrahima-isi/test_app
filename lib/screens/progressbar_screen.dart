@@ -88,95 +88,87 @@ void init() {
         title: const Text('Chargement'),
         backgroundColor: Colors.orangeAccent,
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/2.png"),
-            fit: BoxFit.cover,
-          )
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 40),
-              Text(loadingMessages[currentIndex],
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.brown,
-                    fontWeight: FontWeight.bold,
-                  )),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 8.0),
-                child: progress < 1 ? LinearProgressIndicator(
-                  value: progress,
-                  color: Colors.tealAccent,
-                  minHeight: 20,
-                ) :
-                ElevatedButton(onPressed: () => {
-                  progress = 0,
-                  indexCity = 0,
-                  weatherDatas.clear(),
-                  // timerRequest?.cancel(),
-                  // timerProgress?.cancel(),
-                  init()
-                },
-                  child: const Text("Recommencer",
-                      style: TextStyle(fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.tealAccent
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 40),
+            Text(loadingMessages[currentIndex],
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.brown,
+                  fontWeight: FontWeight.bold,
+                )),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 8.0),
+              child: progress < 1 ? LinearProgressIndicator(
+                value: progress,
+                color: Colors.tealAccent,
+                minHeight: 20,
+              ) :
+              ElevatedButton(onPressed: () => {
+                progress = 0,
+                indexCity = 0,
+                weatherDatas.clear(),
+                // timerRequest?.cancel(),
+                // timerProgress?.cancel(),
+                init()
+              },
+                child: const Text("Recommencer",
+                    style: TextStyle(fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.tealAccent
+                        )
+                )
+            ),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailScreen(
+                                  weather: weatherDatas[index],
+                                )
+                              ),
+                      );
+                    },
+                    child: ListTile(
+                        title: Text(
+                          weatherDatas[index].city ,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey,
+                            fontSize: 20,
                           )
-                  )
+                        ),
+                        subtitle: Text(
+                          "${weatherDatas[index].heat}°C",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.deepOrangeAccent,
+                            fontSize: 16,
+                            fontStyle: FontStyle.italic,
+                          )
+                        ),
+                        trailing: Text(
+                          "${weatherDatas[index].clouds}%",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.deepPurple,
+                            fontSize: 14,
+                          )
+                        )),
+                  );
+                },
+                itemCount: weatherDatas.length,
               ),
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DetailScreen(
-                                    weather: weatherDatas[index],
-                                  )
-                                ),
-                        );
-                      },
-                      child: ListTile(
-                          title: Text(
-                            weatherDatas[index].city ,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey,
-                              fontSize: 20,
-                            )
-                          ),
-                          subtitle: Text(
-                            "${weatherDatas[index].heat}°C",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.deepOrangeAccent,
-                              fontSize: 16,
-                              fontStyle: FontStyle.italic,
-                            )
-                          ),
-                          trailing: Text(
-                            "${weatherDatas[index].clouds}%",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.deepPurple,
-                              fontSize: 14,
-                            )
-                          )),
-                    );
-                  },
-                  itemCount: weatherDatas.length,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
